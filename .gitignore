@@ -1,6 +1,7 @@
 # User
 credentials.json
 token.pickle
+api_token
 .vscode
 
 # Byte-compiled / optimized / DLL files
