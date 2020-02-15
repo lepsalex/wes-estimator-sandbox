@@ -6,35 +6,50 @@ SPREADSHEET_ID = "1oQBjKw9eJbI1ViDiGOTU3i87tBPnn6TGbhQfs6B1_tA"
 
 # RANGES
 RUN_ID_COL_SHORT = "'AutoAlign'!A2:A7"
-RUN_ID_COL = "'AutoAlign'!A2:A39"
-WRITE_START = "'AutoAlign'!C2"
+RUN_ID_COL = "'AutoAlign'!A40:A53"
+ALIGN_WRITE_START = "'AutoAlign'!C177"
+RUNS_WRITE_START = "'AutoAlign'!A57"
+
+autoAlign = Sheet(SPREADSHEET_ID)
+
 
 def readAutoAlign():
-    autoAlign = Sheet(SPREADSHEET_ID)
     wesRunIds = autoAlign.readColumn(RUN_ID_COL_SHORT)
-    return list(getWesRuns(wesRunIds))
+    return getWesRuns(wesRunIds)
 
-# align_tasks = [item for sublist in [extractRunInfo(run) for run in runs] for item in sublist]
+
+def writeAutoAlign(runs, range):
+    align_tasks = [item for sublist in [
+        extractRunInfo(run) for run in runs] for item in sublist]
+    autoAlign.updateRange(align_tasks, range)
+
+
+def startNewJobs(params, range):
+    newRuns = map(startVariableParamsRun, params_for_test)
+    autoAlign.updateRange(list(newRuns), range)
+
 
 params_for_test = [
-    {"cpus": 2, "nfs": "nfs-1-c1"},
-    {"cpus": 2, "nfs": "nfs-1-c2"},
-    {"cpus": 6, "nfs": "nfs-1-c3"},
-    {"cpus": 6, "nfs": "nfs-1-c4"},
-    {"cpus": 10, "nfs": "nfs-2-c1"},
-    {"cpus": 10, "nfs": "nfs-2-c2"},
-    {"cpus": 14, "nfs": "nfs-2-c3"},
-    {"cpus": 14, "nfs": "nfs-2-c4"},
-    {"cpus": 18, "nfs": "nfs-3-c1"},
-    {"cpus": 18, "nfs": "nfs-3-c2"},
-    {"cpus": 22, "nfs": "nfs-3-c3"},
-    {"cpus": 22, "nfs": "nfs-3-c4"},
-    {"cpus": 26, "nfs": "nfs-4-c1"},
-    {"cpus": 26, "nfs": "nfs-4-c2"},
-    {"cpus": 30, "nfs": "nfs-4-c3"},
-    {"cpus": 30, "nfs": "nfs-4-c4"}
+    # {"cpus": 2, "nfs": "nfs-1-c1"},
+    # {"cpus": 2, "nfs": "nfs-1-c2"},
+    # {"cpus": 8, "nfs": "nfs-1-c3", "analysisId": "15c2fb45-d531-4735-82fb-45d531573575"},
+    {"cpus": 4, "nfs": "nfs-1-c4", "analysisId": "15c2fb45-d531-4735-82fb-45d531573575"},
+    {"cpus": 6, "nfs": "nfs-2-c1", "analysisId": "15c2fb45-d531-4735-82fb-45d531573575"},
+    {"cpus": 10, "nfs": "nfs-2-c2", "analysisId": "15c2fb45-d531-4735-82fb-45d531573575"},
+    {"cpus": 12, "nfs": "nfs-2-c3", "analysisId": "15c2fb45-d531-4735-82fb-45d531573575"},
+    {"cpus": 14, "nfs": "nfs-2-c4", "analysisId": "15c2fb45-d531-4735-82fb-45d531573575"},
+    {"cpus": 16, "nfs": "nfs-3-c1", "analysisId": "15c2fb45-d531-4735-82fb-45d531573575"},
+    {"cpus": 18, "nfs": "nfs-3-c2", "analysisId": "15c2fb45-d531-4735-82fb-45d531573575"},
+    {"cpus": 20, "nfs": "nfs-3-c3", "analysisId": "15c2fb45-d531-4735-82fb-45d531573575"},
+    {"cpus": 22, "nfs": "nfs-3-c4", "analysisId": "15c2fb45-d531-4735-82fb-45d531573575"},
+    {"cpus": 24, "nfs": "nfs-4-c1", "analysisId": "15c2fb45-d531-4735-82fb-45d531573575"},
+    {"cpus": 28, "nfs": "nfs-4-c2", "analysisId": "15c2fb45-d531-4735-82fb-45d531573575"},
+    {"cpus": 32, "nfs": "nfs-4-c3", "analysisId": "15c2fb45-d531-4735-82fb-45d531573575"},
+    {"cpus": 36, "nfs": "nfs-4-c4", "analysisId": "15c2fb45-d531-4735-82fb-45d531573575"}
 ]
 
-result = map(startVariableParamsRun, params_for_test)
+# Write align data to sheet
+# writeAutoAlign(readAutoAlign(), ALIGN_WRITE_START)
 
-print(list(result))
+# Run new jobs and record run_id to sheet
+startNewJobs(params_for_test, RUNS_WRITE_START)
