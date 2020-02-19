@@ -43,7 +43,8 @@ def startWesRuns(paramsList, tokenFile="api_token", scoreTokenFile="score_api_to
     return loop.run_until_complete(asyncio.gather(*coroutines))
 
 
-async def startVariableParamsRun(params, api_token, score_api_token, semaphore = asyncio.Semaphore(3)):
+# currently running Semaphore at 1 due to wes api start runs not able to handle more
+async def startVariableParamsRun(params, api_token, score_api_token, semaphore = asyncio.Semaphore(1)):
     async with semaphore:
         async with aiohttp.ClientSession() as session:
             cpus = params["cpus"]

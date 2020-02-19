@@ -7,7 +7,7 @@ SPREADSHEET_ID = "1oQBjKw9eJbI1ViDiGOTU3i87tBPnn6TGbhQfs6B1_tA"
 # RANGES
 RUN_ID_COL_TEST = "'AutoAlign'!A2:A7"
 
-RUN_ID_COL = "'AutoAlign'!A2:A82"
+RUN_ID_COL = "'AutoAlign'!A2:A98"
 ALIGN_WRITE_START = "'AutoAlign'!C2"
 
 RUNS_WRITE_START = "'AutoAlign'!A99"
@@ -27,7 +27,7 @@ def startNewJobs(params, range):
     newRuns = startWesRuns(params)
     autoAlign.updateRange(newRuns, range)
 
-ANALYSIS_ID = "1923803b-73f5-4bc2-a380-3b73f5fbc229"
+ANALYSIS_ID = "15c2fb45-d531-4735-82fb-45d531573575"
 
 params_for_test = [
     {"cpus": 4, "nfs": "nfs-1-c1", "analysisId": ANALYSIS_ID},
